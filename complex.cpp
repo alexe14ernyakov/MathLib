@@ -1,5 +1,12 @@
 #include "complex.h"
 
+math::complex::complex() {
+    _x = 0;
+    _y = 0;
+    _r = 0;
+    _phi = 0;
+}
+
 math::complex::complex(int number) {
     _x = (double)number;
     _y = 0;
@@ -28,15 +35,15 @@ math::complex::complex(double x, double y) {
 }
 
 const math::complex math::operator+(const math::complex &first, const math::complex &second) {
-    return math::complex(first._x + second._x, first._y + second._y);
+    return complex(first._x + second._x, first._y + second._y);
 }
 
 const math::complex math::operator-(const math::complex &first, const math::complex &second) {
-    return math::complex(first._x - second._x, first._y - second._y);
+    return complex(first._x - second._x, first._y - second._y);
 }
 
 const math::complex math::operator*(const math::complex &first, const math::complex &second) {
-    return math::complex(first._x * second._x - first._y * second._y, first._x * second._y + first._y * second._x);
+    return complex(first._x * second._x - first._y * second._y, first._x * second._y + first._y * second._x);
 }
 
 const math::complex math::operator/(const math::complex &first, const math::complex &second) {
@@ -48,9 +55,21 @@ const math::complex math::operator/(const math::complex &first, const math::comp
     return complex(x, y);
 }
 
+double math::complex::x() const {
+    return _x;
+}
+
+double math::complex::y() const {
+    return _y;
+}
+
 double math::complex::modulus() const {
     return _r;
 }
 
+std::ostream& operator<<(std::ostream &stream, math::complex const& number){
+    stream << number.x() << "+" << number.y() << "j";
+    return stream;
+}
 
 
