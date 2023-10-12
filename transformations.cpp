@@ -26,7 +26,34 @@ math::Signal::Signal(math::complex *source, int size) {
     }
 }
 
-math::Signal discrete_hartley_transform(math::Signal primary){
+int math::Signal::size() const {
+    return _size;
+}
 
+const math::complex &math::Signal::operator[](int n) const {
+    return _subsequence[n];
+}
+
+void math::Signal::print() const {
+    std::cout << "[ ";
+    for(int i = 0; i < size(); i++){
+        std::cout << _subsequence[i] << " ";
+    }
+    std::cout << "]" << std::endl;
+}
+
+[[maybe_unused]] math::Signal discrete_hartley_transform(math::Signal primary){
+    auto* values = new math::complex[primary.size()];
+    math::complex value;
+    for(int k = 0; k < primary.size(); k++){
+        value = math::complex();
+        for(int i = 0; i < primary.size(); i++){
+            value = value + primary[i] * math::complex( cos(2 * M_PI * i * k / primary.size()) + sin(2 * M_PI * i * k / primary.size()));
+        }
+        values[k] = value;
+    }
+
+    math::Signal result = math::Signal(values, primary.size());
+    return result;
 }
 
